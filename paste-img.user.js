@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tabun Image Uploader
 // @include      https://tabun.everypony.*
-// @version      0.1.1
+// @version      0.1.2
 // @description  upload images by pasting them
 // @author       badunius
 // @match        https://tampermonkey.net/index.php?version=4.8&ext=dhdg&updated=true
@@ -10,6 +10,9 @@
 // @updateURL    http://badunasus/TBL.user.js
 // ==/UserScript==
 
+// Такая уебанская инъекция из-за того, что ГМ ебал мои фетчи
+// Что ж, это взаимно, сучёныш
+const src = `
 /**
  * Returns LS security key
  */
@@ -43,34 +46,11 @@ const sendImage = async (image) => {
 	form.append('title', '')
 	form.append('security_ls_key', getKey())
   console.log('FORM', form)
-
-  GM.xmlHttpRequest({
-    method: "GET",
-    url: "http://www.example.com/",
-    onload: function(response) {
-      alert(response.responseText);
-    }
-  });
-  /*
-  GM.xmlHttpRequest({
-    method: "POST",
-    url: '/ajax/upload/image/',
-    data: form,
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    onload: function(response) {
-      console.log('>>>', response)
-    },
-    onprogress: function(evt) {
-      console.log('<<<', evt)
-    },
-  }); */
   
-	const res = {} /* await fetch('/ajax/upload/image/', {
+	const res = await fetch('/ajax/upload/image/', {
 		method: 'POST',
 		body: form
-	}) */
+	})
   console.log('RES', res)
   
 	const text = await res.text()
@@ -95,7 +75,7 @@ const pasteTag = (target, data) => {
 	const after = text.slice(end)
 	const middle = data.sText || ''
 
-	target.value = `${before}${middle}${after}`
+	target.value = before + middle + after
 	target.selectionStart = start
 	target.selectionEnd = start + middle.length
 }
@@ -111,12 +91,12 @@ const onPaste = (evt) => {
 	sendImage(image)
 		.then(res => pasteTag(evt.target, res))
 }
-  
 
 
-(function() {
-  'use strict';
+document.addEventListener('paste', onPaste)
+`
 
-  document.addEventListener('paste', onPaste)
-  console.log('Loaded+')
-})()
+const script = document.createElement('script')
+script.textContent = src
+document.body.appendChild(script)
+console.log('Loaded+')
