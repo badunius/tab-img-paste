@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         Tabun Image Uploader
 // @include      https://tabun.everypony.*
-// @version      0.1.0
+// @version      0.1.1
 // @description  upload images by pasting them
 // @author       badunius
 // @match        https://tampermonkey.net/index.php?version=4.8&ext=dhdg&updated=true
-// @grant        none
-// @downloadURL  https://github.com/badunius/tab-img-paste/raw/main/paste-img.user.js
-// @updateURL    https://github.com/badunius/tab-img-paste/raw/main/paste-img.user.js
+// @grant        GM_xmlhttpRequest
+// @downloadURL  http://badunasus/TBL.user.js
+// @updateURL    http://badunasus/TBL.user.js
 // ==/UserScript==
 
 /**
@@ -42,12 +42,39 @@ const sendImage = async (image) => {
 	form.append('img_file', image)
 	form.append('title', '')
 	form.append('security_ls_key', getKey())
+  console.log('FORM', form)
 
-	const res = await fetch('/ajax/upload/image/', {
+  GM.xmlHttpRequest({
+    method: "GET",
+    url: "http://www.example.com/",
+    onload: function(response) {
+      alert(response.responseText);
+    }
+  });
+  /*
+  GM.xmlHttpRequest({
+    method: "POST",
+    url: '/ajax/upload/image/',
+    data: form,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    onload: function(response) {
+      console.log('>>>', response)
+    },
+    onprogress: function(evt) {
+      console.log('<<<', evt)
+    },
+  }); */
+  
+	const res = {} /* await fetch('/ajax/upload/image/', {
 		method: 'POST',
 		body: form
-	})
+	}) */
+  console.log('RES', res)
+  
 	const text = await res.text()
+  console.log('TEXT', text)
 
 	const json = JSON.parse(new DOMParser().parseFromString(text, 'text/html').querySelector('textarea').textContent)
 
@@ -91,5 +118,5 @@ const onPaste = (evt) => {
   'use strict';
 
   document.addEventListener('paste', onPaste)
-  console.log('Loaded')
+  console.log('Loaded+')
 })()
