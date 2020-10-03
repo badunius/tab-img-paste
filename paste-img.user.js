@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         Tabun Image Uploader
 // @include      https://tabun.everypony.*
-// @version      0.1.3
+// @version      0.1.4
 // @description  upload images by pasting them
 // @author       badunius
 // @match        https://tampermonkey.net/index.php?version=4.8&ext=dhdg&updated=true
-// @grant        GM_xmlhttpRequest
-// @downloadURL  http://badunasus/TBL.user.js
-// @updateURL    http://badunasus/TBL.user.js
+// @grant        тщту
+// @downloadURL  https://github.com/badunius/tab-img-paste/raw/main/paste-img.user.js
+// @updateURL    https://github.com/badunius/tab-img-paste/raw/main/paste-img.user.js
 // ==/UserScript==
 
 // Такая уебанская инъекция из-за того, что ГМ ебал мои фетчи
