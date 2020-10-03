@@ -6,8 +6,8 @@
 // @author       badunius
 // @match        https://tampermonkey.net/index.php?version=4.8&ext=dhdg&updated=true
 // @grant        none
-// @downloadURL  http://badunasus/TBL.user.js
-// @updateURL    http://badunasus/TBL.user.js
+// @downloadURL  https://github.com/badunius/tab-img-paste/raw/main/paste-img.user.js
+// @updateURL    https://github.com/badunius/tab-img-paste/raw/main/paste-img.user.js
 // ==/UserScript==
 
 /**
