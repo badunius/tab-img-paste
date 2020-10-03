@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Tabun Image Uploader
 // @include      https://tabun.everypony.*
-// @version      0.1.2
+// @version      0.1.3
 // @description  upload images by pasting them
 // @author       badunius
 // @match        https://tampermonkey.net/index.php?version=4.8&ext=dhdg&updated=true
@@ -45,21 +45,16 @@ const sendImage = async (image) => {
 	form.append('img_file', image)
 	form.append('title', '')
 	form.append('security_ls_key', getKey())
-  console.log('FORM', form)
   
 	const res = await fetch('/ajax/upload/image/', {
 		method: 'POST',
 		body: form
 	})
-  console.log('RES', res)
   
 	const text = await res.text()
-  console.log('TEXT', text)
 
 	const json = JSON.parse(new DOMParser().parseFromString(text, 'text/html').querySelector('textarea').textContent)
 
-
-	console.log(json)
 	return json
 }
 
@@ -87,7 +82,6 @@ const onPaste = (evt) => {
 	const image = getImage(items)
 	if (!image) { return }
 	
-	console.log(image)
 	sendImage(image)
 		.then(res => pasteTag(evt.target, res))
 }
@@ -99,4 +93,4 @@ document.addEventListener('paste', onPaste)
 const script = document.createElement('script')
 script.textContent = src
 document.body.appendChild(script)
-console.log('Loaded+')
+console.log('Image Uploader ready')
